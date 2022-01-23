@@ -1,0 +1,342 @@
+﻿
+@{
+    ViewBag.Title = "myTopicLecture";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var topicExtension = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicExtension;
+    var topicProgress = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicProgress;
+    var topicExEnd = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicExEnd;
+    var topicEnd = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.topicEnd;
+}
+@model DuAnQLNCKH.Models.TopicOfLecture 
+@using DuAnQLNCKH.Models
+<div class="page-header" style="margin-top:20px">
+    <img src="~/images/statistic.png" width="50px" height="50px" />
+    <strong style="color:blue; font-size:26px; font-weight:bold">Thống kê danh sách đề tài </strong>
+</div>
+<hr />
+<div style="font-size:24px; font-weight:bold; margin-bottom:20px">Đề tài chờ duyệt</div>
+@if (topicExtension.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+    <table class="table1">
+        <tr class="headerrow">
+            <th>
+                Nhóm tác giả
+            </th>
+            <th>
+                Tên công trình
+
+            </th>
+            <th>
+                Ngày bắt đầu
+
+            </th>
+            <th>
+                Thời gian thực hiện
+
+            </th>
+            <th>Ngày kết thúc</th>
+            <th>
+                Chi phí
+
+            </th>
+             
+            <th>
+                File thuyết minh
+            </th>
+        </tr>
+        @foreach (var item in topicExtension)
+        {
+            <tr>
+                <td>
+                    @foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (i.Grade == 0)
+                        {
+                            <b>@i.NameAu *</b> <br />
+                        }
+                        else
+                        {
+                            <br /> @i.NameAu
+                        }
+                    }
+                </td>
+                <td>@item.topicOfLecture.Name</td>
+
+                <td> @item.topicOfLecture.DateSt.ToString("d")</td>
+
+                <td>@item.topicOfLecture.Times</td>
+                <td>
+                    @{
+
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+                 
+                 <td><a href="@Url.Action("DownloadFile","Notification",new { filePath = item.topicOfLecture.FileDemo})">@item.topicOfLecture.FileDemo</a></td>
+
+             </tr>
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+
+
+}
+
+<div style="font-size:24px; font-weight:bold; margin-top: 50px; margin-bottom:20px">Đề tài đang thực hiện</div>
+@if (topicProgress.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+
+    <table class="table1">
+        <tr class="headerrow">
+            <th>Nhóm tác giả</th>
+            <th>
+                Tên công trình
+
+            </th>
+            
+            <th>
+                Ngày bắt đầu
+
+            </th>
+            
+            <th>Ngày kết thúc</th>
+            <th>
+                Chi phí
+
+            </th>
+            <th>
+                Trạng thái
+
+            </th>
+            <th>
+                Thời gian gia hạn
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in topicProgress)
+        {
+            var progress = "đang thực hiện";
+            var progress1 = item.progressLe.Progress;
+            if (progress1==2)
+            {
+                progress = "quá hạn";
+            }
+            <tr>
+                @using (Html.BeginForm("Register1","TopicOfLecture"))
+                { 
+                    <td>
+                        <input name="IdTp" value="@item.topicOfLecture.IdTp" type="hidden"/>
+                    @foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (i.Grade == 0)
+                        {
+                            <b>@i.NameAu *</b> <br />
+                        }
+                        else
+                        {
+                            <br /> @i.NameAu
+                        }
+                    }
+                 </td>
+                <td>@item.topicOfLecture.Name</td>
+
+                <td> @item.topicOfLecture.DateSt.ToString("d")</td>
+ 
+                <td>
+                    @{
+
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+                <td>@progress</td>
+                <td width="150px">
+                    @{string a = null; }
+                    @if (item.extension.Status.Equals("Đã duyệt"))
+                    {
+                        a = item.extension.Times.ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        a = "không có".ToString();
+
+                    }
+                    @a
+                </td>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="Đăng ký nghiệm thu" />
+                  
+                </td>
+                }
+                
+            </tr>
+            
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}
+<div style="font-size:24px; font-weight:bold; margin-top: 50px; margin-bottom:20px">Đề tài đang chờ nghiệm thu</div>
+@if (topicExEnd.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+    <table class="table1">
+        <tr class="headerrow">
+            <th>
+                Nhóm tác giả
+            </th>
+            <th>
+                Tên công trình
+
+            </th>
+            <th>
+                Ngày bắt đầu
+
+            </th>
+
+            <th>Ngày kết thúc</th>
+            <th>
+                Chi phí
+
+            </th>
+
+            <th>
+                Thời gian gia hạn
+            </th>
+             
+        </tr>
+        @foreach (var item in topicExEnd)
+        {
+             
+            <tr>
+                <td>
+                    @foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (i.Grade == 0)
+                        {
+                            <b>@i.NameAu *</b> <br />
+                        }
+                        else
+                        {
+                            <br /> @i.NameAu
+                        }
+                    }
+                </td>
+                <td>@item.topicOfLecture.Name</td>
+
+                <td> @item.topicOfLecture.DateSt.ToString("d")</td>
+ 
+                <td>
+                    @{
+
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+                 
+                <td width="150px">
+                    @{string a = null; }
+                    @if (item.extension.Status.Equals("Đã duyệt"))
+                    {
+                        a = item.extension.Times.ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        a = "không có".ToString();
+
+                    }
+                    @a
+                </td>
+                 
+            </tr>
+            
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}
+<div style="font-size:24px; font-weight:bold; margin-top: 50px; margin-bottom:20px">Đề tài đã nghiệm thu</div>
+
+@if (topicEnd.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+
+    <table class="table1">
+        <tr class="headerrow">
+            <th>
+                Nhóm tác giả
+            </th>
+            <th>
+                Tên công trình
+
+            </th>
+             <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>
+                Chi phí
+
+            </th>
+
+        </tr>
+        @foreach (var item in topicEnd)
+        {
+            <tr>
+                <td>
+                    @foreach (var i in new TopicOfLectureModel().listAuthors(item.topicOfLecture.IdTp))
+                    {
+                        if (i.Grade == 0)
+                        {
+                            <b>@i.NameAu *</b> <br />
+                        }
+                        else
+                        {
+                            <br /> @i.NameAu
+                        }
+                    }
+                 </td>
+                <td>@item.topicOfLecture.Name</td>
+
+                <td> @item.topicOfLecture.DateSt.ToString("d")</td>
+
+                 
+                <td>
+                    @{
+
+                        var dateEnd = item.topicOfLecture.DateSt.AddMonths(item.topicOfLecture.Times).ToString("d");
+                        <p>@dateEnd</p>
+                    }
+                </td>
+                <td>@item.topicOfLecture.Expense</td>
+             </tr>
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}
+
+
+
+

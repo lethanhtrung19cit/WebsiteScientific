@@ -1,0 +1,9 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">Tên đề tài</th><th scope="col">Tên giảng viên</th><th scope="col">Tên khoa</th><th scope="col">Loại đề tài</th><th scope="col">Ngày bắt đầu</th><th scope="col">Thời gian</th><th scope="col">Kết thúc</th><th scope="col">Kinh phí</th><th scope="col">Trạng thái</th><th scope="col">Điểm</th>
+		</tr><tr>
+			<td>Nghi&#234;n cứu c&#225;c chỉ số tuần ho&#224;n trong hoạt động chạy 100m</td><td>Nguyễn Văn B</td><td>Y sinh</td><td>Tạp ch&#237;</td><td>23/05/2021</td><td>12 th&#225;ng</td><td>23/05/2022</td><td>20000000 VNĐ</td><td>đang thực hiện</td><td>8.5</td>
+		</tr>
+	</table>
+</div>

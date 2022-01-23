@@ -1,0 +1,929 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="nckh_dhdnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWord" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Access" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="IdAu" />
+          </Key>
+          <Property Name="IdAu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTp" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="30" />
+          <Property Name="NameAu" Type="ntext" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="Point" Type="float" />
+          <Property Name="Time" Type="int" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="IdKhoa" />
+          </Key>
+          <Property Name="IdKhoa" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="text" />
+        </EntityType>
+        <EntityType Name="Email">
+          <Key>
+            <PropertyRef Name="NameEmail" />
+          </Key>
+          <Property Name="NameEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWord" Type="varchar" MaxLength="50" />
+          <Property Name="Id" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Extension">
+          <Key>
+            <PropertyRef Name="IdEx" />
+          </Key>
+          <Property Name="IdEx" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTp" Type="varchar" MaxLength="10" />
+          <Property Name="Times" Type="date" Nullable="false" />
+          <Property Name="Status" Type="ntext" />
+          <Property Name="Reason" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="IdFa" />
+          </Key>
+          <Property Name="IdFa" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Information">
+          <Key>
+            <PropertyRef Name="IdLe" />
+          </Key>
+          <Property Name="IdLe" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NameLe" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="char" MaxLength="10" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Address" Type="ntext" />
+          <Property Name="CMND" Type="varchar" MaxLength="14" />
+          <Property Name="IdKhoa" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdPo" Type="int" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="IdNo" />
+          </Key>
+          <Property Name="IdNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCreat" Type="date" Nullable="false" />
+          <Property Name="PersonCreat" Type="ntext" />
+          <Property Name="Title" Type="ntext" />
+          <Property Name="MetaTitle" Type="text" />
+          <Property Name="Content" Type="ntext" />
+          <Property Name="FileName" Type="text" />
+          <Property Name="Object" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PointTable">
+          <Key>
+            <PropertyRef Name="IdP" />
+          </Key>
+          <Property Name="IdP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameP" Type="ntext" />
+          <Property Name="Value" Type="float" />
+          <Property Name="MaxTime" Type="int" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="IdPo" />
+          </Key>
+          <Property Name="IdPo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamePo" Type="ntext" />
+          <Property Name="Hours" Type="float" />
+        </EntityType>
+        <EntityType Name="ProgressLe">
+          <Key>
+            <PropertyRef Name="IdPr" />
+          </Key>
+          <Property Name="IdPr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTp" Type="varchar" MaxLength="10" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Progress" Type="int" />
+        </EntityType>
+        <EntityType Name="ProgressSt">
+          <Key>
+            <PropertyRef Name="IdPr" />
+          </Key>
+          <Property Name="IdPr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTp" Type="varchar" MaxLength="10" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Progress" Type="int" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="IdSu" />
+          </Key>
+          <Property Name="IdSu" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NameCu" Type="ntext" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TopicOfLecture">
+          <Key>
+            <PropertyRef Name="IdTp" />
+          </Key>
+          <Property Name="IdTp" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="ntext" />
+          <Property Name="IdP" Type="int" />
+          <Property Name="DateSt" Type="date" Nullable="false" />
+          <Property Name="Times" Type="int" Nullable="false" />
+          <Property Name="Expense" Type="float" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="CountAuthor" Type="int" Nullable="false" />
+          <Property Name="FileDemo" Type="text" />
+        </EntityType>
+        <EntityType Name="TopicOfStudent">
+          <Key>
+            <PropertyRef Name="IdTp" />
+          </Key>
+          <Property Name="IdTp" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="ntext" />
+          <Property Name="NameSt" Type="ntext" />
+          <Property Name="IdSV" Type="varchar" MaxLength="12" />
+          <Property Name="Email" Type="varchar" MaxLength="30" />
+          <Property Name="IdP" Type="int" />
+          <Property Name="DateSt" Type="date" Nullable="false" />
+          <Property Name="Times" Type="int" Nullable="false" />
+          <Property Name="Expense" Type="float" />
+          <Property Name="CountAuthor" Type="int" Nullable="false" />
+          <Property Name="IdSu" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="FileDemo" Type="ntext" />
+          <Property Name="LectureIntruc" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Extension__Times__5165187F">
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="0..1" />
+          <End Role="Extension" Type="Self.Extension" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfLecture">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="Extension">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProgressL__Statu__477199F1">
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="0..1" />
+          <End Role="ProgressLe" Type="Self.ProgressLe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfLecture">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="ProgressLe">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TopicOfLect__IdP__3B75D760">
+          <End Role="PointTable" Type="Self.PointTable" Multiplicity="0..1" />
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PointTable">
+              <PropertyRef Name="IdP" />
+            </Principal>
+            <Dependent Role="TopicOfLecture">
+              <PropertyRef Name="IdP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Author_TopicOfLecture">
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="1" />
+          <End Role="Author" Type="Self.Author" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfLecture">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="Author">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Fa">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="Information" Type="Self.Information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="IdFa" />
+            </Principal>
+            <Dependent Role="Information">
+              <PropertyRef Name="IdKhoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Information_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Information" Type="Self.Information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Information">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Information_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
+          <End Role="Information" Type="Self.Information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="IdPo" />
+            </Principal>
+            <Dependent Role="Information">
+              <PropertyRef Name="IdPo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProgressSt_TopicOfStudent">
+          <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="0..1" />
+          <End Role="ProgressSt" Type="Self.ProgressSt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfStudent">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="ProgressSt">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicOfStudent_PointTable">
+          <End Role="PointTable" Type="Self.PointTable" Multiplicity="0..1" />
+          <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PointTable">
+              <PropertyRef Name="IdP" />
+            </Principal>
+            <Dependent Role="TopicOfStudent">
+              <PropertyRef Name="IdP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicOfStudent_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="IdSu" />
+            </Principal>
+            <Dependent Role="TopicOfStudent">
+              <PropertyRef Name="IdSu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="nckh_dhdnModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Email" EntityType="Self.Email" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Extension" EntityType="Self.Extension" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Information" EntityType="Self.Information" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PointTable" EntityType="Self.PointTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProgressLe" EntityType="Self.ProgressLe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProgressSt" EntityType="Self.ProgressSt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TopicOfLecture" EntityType="Self.TopicOfLecture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TopicOfStudent" EntityType="Self.TopicOfStudent" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Extension__Times__5165187F" Association="Self.FK__Extension__Times__5165187F">
+            <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+            <End Role="Extension" EntitySet="Extension" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProgressL__Statu__477199F1" Association="Self.FK__ProgressL__Statu__477199F1">
+            <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+            <End Role="ProgressLe" EntitySet="ProgressLe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TopicOfLect__IdP__3B75D760" Association="Self.FK__TopicOfLect__IdP__3B75D760">
+            <End Role="PointTable" EntitySet="PointTable" />
+            <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Author_TopicOfLecture" Association="Self.FK_Author_TopicOfLecture">
+            <End Role="TopicOfLecture" EntitySet="TopicOfLecture" />
+            <End Role="Author" EntitySet="Author" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Fa" Association="Self.fk_Fa">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="Information" EntitySet="Information" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Information_Account" Association="Self.FK_Information_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Information" EntitySet="Information" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Information_Position" Association="Self.FK_Information_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Information" EntitySet="Information" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProgressSt_TopicOfStudent" Association="Self.FK_ProgressSt_TopicOfStudent">
+            <End Role="TopicOfStudent" EntitySet="TopicOfStudent" />
+            <End Role="ProgressSt" EntitySet="ProgressSt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicOfStudent_PointTable" Association="Self.FK_TopicOfStudent_PointTable">
+            <End Role="PointTable" EntitySet="PointTable" />
+            <End Role="TopicOfStudent" EntitySet="TopicOfStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicOfStudent_Subject" Association="Self.FK_TopicOfStudent_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="TopicOfStudent" EntitySet="TopicOfStudent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="nckh_dhdnModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Access" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Information" Relationship="Self.FK_Information_Account" FromRole="Account" ToRole="Information" />
+        </EntityType>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="IdAu" />
+          </Key>
+          <Property Name="IdAu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NameAu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Point" Type="Double" />
+          <Property Name="Time" Type="Int32" />
+          <NavigationProperty Name="TopicOfLecture" Relationship="Self.FK_Author_TopicOfLecture" FromRole="Author" ToRole="TopicOfLecture" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="IdKhoa" />
+          </Key>
+          <Property Name="IdKhoa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Email">
+          <Key>
+            <PropertyRef Name="NameEmail" />
+          </Key>
+          <Property Name="NameEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Extension">
+          <Key>
+            <PropertyRef Name="IdEx" />
+          </Key>
+          <Property Name="IdEx" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Times" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TopicOfLecture" Relationship="Self.FK__Extension__Times__5165187F" FromRole="Extension" ToRole="TopicOfLecture" />
+        </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="IdFa" />
+          </Key>
+          <Property Name="IdFa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Information" Relationship="Self.fk_Fa" FromRole="Faculty" ToRole="Information" />
+        </EntityType>
+        <EntityType Name="Information">
+          <Key>
+            <PropertyRef Name="IdLe" />
+          </Key>
+          <Property Name="IdLe" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NameLe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CMND" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="IdKhoa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdPo" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Information_Account" FromRole="Information" ToRole="Account" />
+          <NavigationProperty Name="Faculty" Relationship="Self.fk_Fa" FromRole="Information" ToRole="Faculty" />
+          <NavigationProperty Name="Position" Relationship="Self.FK_Information_Position" FromRole="Information" ToRole="Position" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="IdNo" />
+          </Key>
+          <Property Name="IdNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreat" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PersonCreat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetaTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Object" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PointTable">
+          <Key>
+            <PropertyRef Name="IdP" />
+          </Key>
+          <Property Name="IdP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Double" />
+          <Property Name="MaxTime" Type="Int32" />
+          <NavigationProperty Name="TopicOfLectures" Relationship="Self.FK__TopicOfLect__IdP__3B75D760" FromRole="PointTable" ToRole="TopicOfLecture" />
+          <NavigationProperty Name="TopicOfStudents" Relationship="Self.FK_TopicOfStudent_PointTable" FromRole="PointTable" ToRole="TopicOfStudent" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="IdPo" />
+          </Key>
+          <Property Name="IdPo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hours" Type="Double" />
+          <NavigationProperty Name="Information" Relationship="Self.FK_Information_Position" FromRole="Position" ToRole="Information" />
+        </EntityType>
+        <EntityType Name="ProgressLe">
+          <Key>
+            <PropertyRef Name="IdPr" />
+          </Key>
+          <Property Name="IdPr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Progress" Type="Int32" />
+          <NavigationProperty Name="TopicOfLecture" Relationship="Self.FK__ProgressL__Statu__477199F1" FromRole="ProgressLe" ToRole="TopicOfLecture" />
+        </EntityType>
+        <EntityType Name="ProgressSt">
+          <Key>
+            <PropertyRef Name="IdPr" />
+          </Key>
+          <Property Name="IdPr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Progress" Type="Int32" />
+          <NavigationProperty Name="TopicOfStudent" Relationship="Self.FK_ProgressSt_TopicOfStudent" FromRole="ProgressSt" ToRole="TopicOfStudent" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="IdSu" />
+          </Key>
+          <Property Name="IdSu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NameCu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TopicOfStudents" Relationship="Self.FK_TopicOfStudent_Subject" FromRole="Subject" ToRole="TopicOfStudent" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TopicOfLecture">
+          <Key>
+            <PropertyRef Name="IdTp" />
+          </Key>
+          <Property Name="IdTp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdP" Type="Int32" />
+          <Property Name="DateSt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Times" Type="Int32" Nullable="false" />
+          <Property Name="Expense" Type="Double" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="CountAuthor" Type="Int32" Nullable="false" />
+          <Property Name="FileDemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Authors" Relationship="Self.FK_Author_TopicOfLecture" FromRole="TopicOfLecture" ToRole="Author" />
+          <NavigationProperty Name="Extensions" Relationship="Self.FK__Extension__Times__5165187F" FromRole="TopicOfLecture" ToRole="Extension" />
+          <NavigationProperty Name="PointTable" Relationship="Self.FK__TopicOfLect__IdP__3B75D760" FromRole="TopicOfLecture" ToRole="PointTable" />
+          <NavigationProperty Name="ProgressLes" Relationship="Self.FK__ProgressL__Statu__477199F1" FromRole="TopicOfLecture" ToRole="ProgressLe" />
+        </EntityType>
+        <EntityType Name="TopicOfStudent">
+          <Key>
+            <PropertyRef Name="IdTp" />
+          </Key>
+          <Property Name="IdTp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NameSt" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdSV" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IdP" Type="Int32" />
+          <Property Name="DateSt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Times" Type="Int32" Nullable="false" />
+          <Property Name="Expense" Type="Double" />
+          <Property Name="CountAuthor" Type="Int32" Nullable="false" />
+          <Property Name="IdSu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="FileDemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LectureIntruc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PointTable" Relationship="Self.FK_TopicOfStudent_PointTable" FromRole="TopicOfStudent" ToRole="PointTable" />
+          <NavigationProperty Name="ProgressSts" Relationship="Self.FK_ProgressSt_TopicOfStudent" FromRole="TopicOfStudent" ToRole="ProgressSt" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_TopicOfStudent_Subject" FromRole="TopicOfStudent" ToRole="Subject" />
+        </EntityType>
+        <Association Name="FK_Information_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Information" Type="Self.Information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Information">
+              <PropertyRef Name="Email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Author_TopicOfLecture">
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="1" />
+          <End Role="Author" Type="Self.Author" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfLecture">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="Author">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Extension__Times__5165187F">
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="0..1" />
+          <End Role="Extension" Type="Self.Extension" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfLecture">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="Extension">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Fa">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="Information" Type="Self.Information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="IdFa" />
+            </Principal>
+            <Dependent Role="Information">
+              <PropertyRef Name="IdKhoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Information_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
+          <End Role="Information" Type="Self.Information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="IdPo" />
+            </Principal>
+            <Dependent Role="Information">
+              <PropertyRef Name="IdPo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TopicOfLect__IdP__3B75D760">
+          <End Role="PointTable" Type="Self.PointTable" Multiplicity="0..1" />
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PointTable">
+              <PropertyRef Name="IdP" />
+            </Principal>
+            <Dependent Role="TopicOfLecture">
+              <PropertyRef Name="IdP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicOfStudent_PointTable">
+          <End Role="PointTable" Type="Self.PointTable" Multiplicity="0..1" />
+          <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PointTable">
+              <PropertyRef Name="IdP" />
+            </Principal>
+            <Dependent Role="TopicOfStudent">
+              <PropertyRef Name="IdP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProgressL__Statu__477199F1">
+          <End Role="TopicOfLecture" Type="Self.TopicOfLecture" Multiplicity="0..1" />
+          <End Role="ProgressLe" Type="Self.ProgressLe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfLecture">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="ProgressLe">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProgressSt_TopicOfStudent">
+          <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="0..1" />
+          <End Role="ProgressSt" Type="Self.ProgressSt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicOfStudent">
+              <PropertyRef Name="IdTp" />
+            </Principal>
+            <Dependent Role="ProgressSt">
+              <PropertyRef Name="IdTp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicOfStudent_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="TopicOfStudent" Type="Self.TopicOfStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="IdSu" />
+            </Principal>
+            <Dependent Role="TopicOfStudent">
+              <PropertyRef Name="IdSu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DHTDTTDNEntities12" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Authors" EntityType="Self.Author" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Emails" EntityType="Self.Email" />
+          <EntitySet Name="Extensions" EntityType="Self.Extension" />
+          <EntitySet Name="Faculties" EntityType="Self.Faculty" />
+          <EntitySet Name="Information" EntityType="Self.Information" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="PointTables" EntityType="Self.PointTable" />
+          <EntitySet Name="Positions" EntityType="Self.Position" />
+          <EntitySet Name="ProgressLes" EntityType="Self.ProgressLe" />
+          <EntitySet Name="ProgressSts" EntityType="Self.ProgressSt" />
+          <EntitySet Name="Subjects" EntityType="Self.Subject" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TopicOfLectures" EntityType="Self.TopicOfLecture" />
+          <EntitySet Name="TopicOfStudents" EntityType="Self.TopicOfStudent" />
+          <AssociationSet Name="FK_Information_Account" Association="Self.FK_Information_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Information" EntitySet="Information" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Author_TopicOfLecture" Association="Self.FK_Author_TopicOfLecture">
+            <End Role="TopicOfLecture" EntitySet="TopicOfLectures" />
+            <End Role="Author" EntitySet="Authors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Extension__Times__5165187F" Association="Self.FK__Extension__Times__5165187F">
+            <End Role="TopicOfLecture" EntitySet="TopicOfLectures" />
+            <End Role="Extension" EntitySet="Extensions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Fa" Association="Self.fk_Fa">
+            <End Role="Faculty" EntitySet="Faculties" />
+            <End Role="Information" EntitySet="Information" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Information_Position" Association="Self.FK_Information_Position">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Information" EntitySet="Information" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TopicOfLect__IdP__3B75D760" Association="Self.FK__TopicOfLect__IdP__3B75D760">
+            <End Role="PointTable" EntitySet="PointTables" />
+            <End Role="TopicOfLecture" EntitySet="TopicOfLectures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicOfStudent_PointTable" Association="Self.FK_TopicOfStudent_PointTable">
+            <End Role="PointTable" EntitySet="PointTables" />
+            <End Role="TopicOfStudent" EntitySet="TopicOfStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProgressL__Statu__477199F1" Association="Self.FK__ProgressL__Statu__477199F1">
+            <End Role="TopicOfLecture" EntitySet="TopicOfLectures" />
+            <End Role="ProgressLe" EntitySet="ProgressLes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProgressSt_TopicOfStudent" Association="Self.FK_ProgressSt_TopicOfStudent">
+            <End Role="TopicOfStudent" EntitySet="TopicOfStudents" />
+            <End Role="ProgressSt" EntitySet="ProgressSts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicOfStudent_Subject" Association="Self.FK_TopicOfStudent_Subject">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="TopicOfStudent" EntitySet="TopicOfStudents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="nckh_dhdnModelStoreContainer" CdmEntityContainer="DHTDTTDNEntities12">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Access" ColumnName="Access" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="IdAu" ColumnName="IdAu" />
+                <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NameAu" ColumnName="NameAu" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="IdKhoa" ColumnName="IdKhoa" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emails">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Email">
+              <MappingFragment StoreEntitySet="Email">
+                <ScalarProperty Name="NameEmail" ColumnName="NameEmail" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Extensions">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Extension">
+              <MappingFragment StoreEntitySet="Extension">
+                <ScalarProperty Name="IdEx" ColumnName="IdEx" />
+                <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+                <ScalarProperty Name="Times" ColumnName="Times" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faculties">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Faculty">
+              <MappingFragment StoreEntitySet="Faculty">
+                <ScalarProperty Name="IdFa" ColumnName="IdFa" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Information">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Information">
+              <MappingFragment StoreEntitySet="Information">
+                <ScalarProperty Name="IdLe" ColumnName="IdLe" />
+                <ScalarProperty Name="NameLe" ColumnName="NameLe" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="IdKhoa" ColumnName="IdKhoa" />
+                <ScalarProperty Name="IdPo" ColumnName="IdPo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="IdNo" ColumnName="IdNo" />
+                <ScalarProperty Name="DateCreat" ColumnName="DateCreat" />
+                <ScalarProperty Name="PersonCreat" ColumnName="PersonCreat" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Object" ColumnName="Object" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointTables">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.PointTable">
+              <MappingFragment StoreEntitySet="PointTable">
+                <ScalarProperty Name="IdP" ColumnName="IdP" />
+                <ScalarProperty Name="NameP" ColumnName="NameP" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="MaxTime" ColumnName="MaxTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="IdPo" ColumnName="IdPo" />
+                <ScalarProperty Name="NamePo" ColumnName="NamePo" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgressLes">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.ProgressLe">
+              <MappingFragment StoreEntitySet="ProgressLe">
+                <ScalarProperty Name="IdPr" ColumnName="IdPr" />
+                <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Progress" ColumnName="Progress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgressSts">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.ProgressSt">
+              <MappingFragment StoreEntitySet="ProgressSt">
+                <ScalarProperty Name="IdPr" ColumnName="IdPr" />
+                <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Progress" ColumnName="Progress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="IdSu" ColumnName="IdSu" />
+                <ScalarProperty Name="NameCu" ColumnName="NameCu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TopicOfLectures">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.TopicOfLecture">
+              <MappingFragment StoreEntitySet="TopicOfLecture">
+                <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdP" ColumnName="IdP" />
+                <ScalarProperty Name="DateSt" ColumnName="DateSt" />
+                <ScalarProperty Name="Times" ColumnName="Times" />
+                <ScalarProperty Name="Expense" ColumnName="Expense" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CountAuthor" ColumnName="CountAuthor" />
+                <ScalarProperty Name="FileDemo" ColumnName="FileDemo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TopicOfStudents">
+            <EntityTypeMapping TypeName="nckh_dhdnModel.TopicOfStudent">
+              <MappingFragment StoreEntitySet="TopicOfStudent">
+                <ScalarProperty Name="IdTp" ColumnName="IdTp" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NameSt" ColumnName="NameSt" />
+                <ScalarProperty Name="IdSV" ColumnName="IdSV" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdP" ColumnName="IdP" />
+                <ScalarProperty Name="DateSt" ColumnName="DateSt" />
+                <ScalarProperty Name="Times" ColumnName="Times" />
+                <ScalarProperty Name="Expense" ColumnName="Expense" />
+                <ScalarProperty Name="CountAuthor" ColumnName="CountAuthor" />
+                <ScalarProperty Name="IdSu" ColumnName="IdSu" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FileDemo" ColumnName="FileDemo" />
+                <ScalarProperty Name="LectureIntruc" ColumnName="LectureIntruc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

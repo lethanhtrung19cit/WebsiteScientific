@@ -1,0 +1,472 @@
+﻿@model IEnumerable<DuAnQLNCKH.Models.TopicOfLecture>
+@{
+    ViewBag.Title = "Thống kê đề tài";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var topicOfStudents = (List<DuAnQLNCKH.Models.TopicOfStudentView>)ViewBag.listtopicOfStudents;
+    var topicOfLectures = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listTopicOfLecture;
+ }
+@using DuAnQLNCKH.Models;
+<script src="~/Scripts/controller/Statistic.js"></script>
+ 
+<div class="page-header" style="margin-top:20px">
+    <img src="~/images/statistic.png" width="50px" height="50px" />
+    <strong style="color:blue; font-size:26px; font-weight:bold">Thống kê danh sách đề tài đang thực hiện</strong>
+</div>
+<hr />
+<div class="tabs">
+    <div class="tab-nav-wrapper">
+        <ul>
+            <li class="active"><a href="#tab1">Đề tài giảng viên</a></li>
+            <li><a href="#tab2">Đề tài sinh viên</a></li>
+
+        </ul>
+    </div>
+
+    <div class="tab-content-wrapper" style="width: 1050px">
+        <div id="tab1" class="tab-content" style="display:none;">
+
+            <div>
+                <h3 style="color: #4040e0; font-weight:bold"> Tiêu chí thống kê </h3>
+            </div>
+            <div class="row" style="margin-bottom:20px">
+
+                <div style="margin-right:20px" class="col-md-2">
+                    Từ ngày
+                    <input id="DateSt" type="date" value="2000-01-01" />
+                </div>
+                <div class="col-md-2">
+
+                    Đến ngày
+                    <input id="DateEnd" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+
+
+
+                <div class="col-md-2" style="margin-left:20px; padding-left:86px">
+                    Loại đề tài
+                </div>
+                <div class="col-md-3">
+                    @if (ViewBag.listtype != null)
+                    {
+
+                        @Html.DropDownList("IdTy", ViewBag.listtype as SelectList, "--Tất cả loại đề tài--", new { @class = "form-control", @style = "color:black; border:solid 1px black; width:400px" })
+
+                    }
+                </div>
+
+            </div>
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-2" style="padding:7px 0 0 100px">
+                    Khoa
+                </div>
+                <div class="col-md-3">
+                    @if (ViewBag.listFacul != null)
+                    {
+
+                        @Html.DropDownList("IdF", ViewBag.listFacul as SelectList, "--Tất cả khoa--", new { @class = "form-control", @style = "background:white; color:black; border:solid 1px black", @onchange="listLecture()" })
+
+                    }
+                </div>
+            
+             
+                <div class="col-md-2" style="padding-left:57px">
+                    Tên giảng viên
+                </div>
+                <div class="col-md-3">
+                    @if (ViewBag.listNameLe != null)
+                    {
+
+                        @Html.DropDownList("IdLe", ViewBag.listNameLe as SelectList, "--Tất cả giảng viên--", new { @class = "form-control", @style = "background:#white; height:100px; color:black; border:solid 1px black" })
+
+                    }
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-2" style="padding-left: 100px">
+                    Tiến độ
+                </div>
+                <div class="col-md-4">
+                    @if (ViewBag.listProgress != null)
+                    {
+
+                        @Html.DropDownList("Progress", ViewBag.listProgress as SelectList, "--Tất cả tiến độ--", new { @class = "form-control", @style = "background:#white; color:black; border:solid 1px black" })
+
+                    }
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <button style="margin: 20px 0 10px 0; background: #5076e4; color:white" class="btn btn-default" id="buttonSearch"><i class="fa fa-search"> Tìm kiếm</i> </button>
+                </div>
+                <div style="margin-left:580px" class="col-md-3">
+                    @using (Html.BeginForm("ExportExcel", "Statistic", FormMethod.Post))
+                    {
+                        
+                        <div class="form-group">
+
+                            <button class="btn btn-default" style="margin-right:100px" id="ExportToExcel" type="submit"> <img src="~/images/excel.png" width="20px" height="20px" /> Xuất Excel</button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <table class="table1" style=" background: white; border: 2px solid #2653d4; box-shadow: 5px 5px 5px #5b74bb">
+                <tr class="headerrow">
+
+                    <th style="width:100px">
+                        Tên đề tài
+                    </th>
+                    <th>
+                        Nhóm tác giả
+                    </th>
+
+                    <th>
+                        Loại đề tài
+
+                    </th>
+                    <th>
+                        Bắt đầu
+                    </th>
+
+                    <th>Kết thúc</th>
+                    <th>
+                        Kinh phí
+                    </th>
+                    <th>
+                        Trạng thái
+                    </th>
+                    <th id="pointHeader">Điểm</th>
+                </tr>
+
+                @foreach (var deTaiGV in topicOfLectures)
+                {
+                    var dateEnd = deTaiGV.topicOfLecture.DateSt.AddMonths(deTaiGV.topicOfLecture.Times).ToString("d");
+                    //var point =(deTaiGV.pointTable.Value / deTaiGV.topicOfLecture.CountAuthor);
+                    var point1 = String.Format("{0:0.0}", deTaiGV.pointTable.Value);
+                    var dateLec = new TopicOfLectureModel().dateLec(deTaiGV.topicOfLecture.IdTp);
+                    if (dateLec == deTaiGV.progressLe.Date)
+                    {
+
+                        var progress = "đang thực hiện";
+                        if (deTaiGV.topicOfLecture.Status == 4)
+                        {
+                            progress = "đã nghiệm thu";
+                        }
+                        else
+                        {
+                            if (deTaiGV.progressLe.Progress == 2)
+                            {
+                                progress = "quá hạn";
+                            }
+                        }
+
+
+
+                        <tr class="Search" id="lecture">
+
+                            <td class="nametd" style="width: 150px; color: blue">@deTaiGV.topicOfLecture.Name</td>
+                            <td>
+                                @foreach (var item in new TopicOfLectureModel().listAuthors(deTaiGV.topicOfLecture.IdTp))
+                                {
+                                    if (item.Grade == 0)
+                                    {
+                                        <b>@item.NameAu *</b> 
+                                    }
+                                    else
+                                    {
+                                       <br /> @item.NameAu 
+                                    }
+                                }
+                            </td>
+                            <td width="170px">@deTaiGV.pointTable.NameP</td>
+                            <td class="Year">@deTaiGV.topicOfLecture.DateSt.ToString("dd/MM/yyyy")</td>
+                            <td>@dateEnd</td>
+                            <td>@deTaiGV.topicOfLecture.Expense VNĐ</td>
+
+                            <td>@progress</td>
+                            <td class="pointBody">@point1</td>
+                            <td style="display:none">
+                                <input class="Year1" value="@deTaiGV.topicOfLecture.DateSt.ToString("yyyy/MM/dd")" type="hidden" />
+                                <input class="IdTy" type="hidden" value="@deTaiGV.pointTable.IdP" />
+                                <input class="IdLe1" value="@deTaiGV.information.IdLe" type="hidden" />
+                                <input class="IdFacu1" value="@deTaiGV.faculty.IdFa" type="hidden" />
+                                <input class="Progress1" value="@deTaiGV.progressLe.Progress" type="hidden" />
+                            </td>
+                        </tr>
+                    }
+
+
+                }
+
+            </table>
+        </div>
+        <div id="tab2" class="tab-content" style="display:none;">
+
+            <div>
+                <h3 style="color: #4040e0; font-weight:bold"> Tiêu chí thống kê </h3>
+            </div>
+            <div class="row" style="margin-bottom:20px">
+
+                <div style="margin-right:20px" class="col-md-2">
+                    Từ ngày
+                    <input id="DateStStu" type="date" value="2000-01-01" />
+                </div>
+                <div class="col-md-2">
+
+                    Đến ngày
+                    <input id="DateEndStu" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="col-md-2" style="margin-left: 20px; padding-left: 86px">
+                    Loại đề tài
+                </div>
+                <div class="col-md-3">
+                    @if (ViewBag.listtype != null)
+                    {
+
+                        @Html.DropDownList("IdTyStu", ViewBag.listtype as SelectList, "--Tất cả loại đề tài--", new { @class = "form-control", @style = "background:white; color:black; border:solid 1px black; width:400px" })
+
+                    }
+                </div>
+
+            </div>
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-2" style="padding:7px 0 0 50px">
+                    Loại chuyên sâu
+                </div>
+                <div class="col-md-3">
+                    @if (ViewBag.subjects1 != null)
+                    {
+
+                        @Html.DropDownList("IdFStu", ViewBag.subjects1 as SelectList, "--Tất cả loại chuyên sâu--", new { @class = "form-control", @style = "background:#white; color:black; border:solid 1px black", @onchange="listStudent()" })
+
+                    }
+                </div>
+
+                <div class="col-md-2" style="padding-left:57px">
+                    Tên sinh viên
+                </div>
+                <div class="col-md-3">
+                    @if (ViewBag.listNameStu != null)
+                    {
+
+                        @Html.DropDownList("IdSV", ViewBag.listNameStu as SelectList, "--Tất cả sinh viên--", new { @class = "form-control", @style = "background:#91a6e4ad; color:black; border:solid 1px black" })
+
+                    }
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-2" style="padding-left: 100px">
+                    Tiến độ
+                </div>
+                <div class="col-md-4">
+                    @if (ViewBag.listProgress != null)
+                    {
+
+                        @Html.DropDownList("ProgressStu", ViewBag.listProgress as SelectList, "--Tất cả tiến độ--", new { @class = "form-control", @style = "background:#white; color:black; border:solid 1px black" })
+
+                    }
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <button style="margin: 20px 0 10px 0; background: #5076e4; color:white" class="btn btn-default" id="buttonSearchStu"><i class="fa fa-search-dollar"> Tìm kiếm</i> </button>
+
+                </div>
+                <div style="margin-left:590px; width:200px" class="col-md-3">
+                    @using (Html.BeginForm("ExportExcelStu", "Statistic", FormMethod.Post, new { @style = "width: 122px" }))
+                    {
+
+                        <div class="form-group">
+
+                            <button class="btn btn-default" id="ExportToExcelStu" type="submit"> <img src="~/images/excel.png" width="20px" height="20px" /> Xuất Excel</button>
+                        </div>
+                    }
+                </div>
+
+                <table class="table1" style="background: white; border: 2px solid #2653d4; box-shadow: 5px 5px 5px #5b74bb ">
+                    <tr class="headerrow">
+
+                        <th>
+                            Tên đề tài
+                        </th>
+                        <th>
+                            Tên sinh viên
+                        </th>
+                        <th>
+                            Chuyên sâu
+                        </th>
+                        <th>
+                            Loại đề tài
+                        </th>
+                        <th>GV hướng dẫn</th>
+                        <th>
+                            Bắt đầu
+                        </th>
+                        <th>
+                            Thời gian
+                        </th>
+                        <th>Kết thúc</th>
+                        <th>
+                            Kinh phí
+                        </th>
+
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th id="pointHeaderStu">Điểm</th>
+                    </tr>
+
+                    @foreach (var topicOfStudent in topicOfStudents)
+                    {
+                        var dateEnd1 = topicOfStudent.topicOfStudent.DateSt.AddMonths(topicOfStudent.topicOfStudent.Times).ToString("d");
+                        var point1 = topicOfStudent.pointTable.Value / topicOfStudent.topicOfStudent.CountAuthor;
+                        var dateStu = new TopicOfLectureModel().dateStu(topicOfStudent.topicOfStudent.IdTp);
+
+                        if (dateStu == topicOfStudent.progressSt.Date)
+                        {
+                            var progress = "";
+                            if (topicOfStudent.progressSt.Progress == 1)
+                            {
+                                progress = "đang thực hiện";
+                            }
+                            else if (topicOfStudent.progressSt.Progress == 2)
+                            {
+                                progress = "quá hạn";
+                            }
+                            else
+                            {
+                                progress = "đã nghiệm thu";
+                            }
+                            <tr id="student" class="SearchStu">
+
+                                <td class="namestudent" style="width:200px; color:blue">@topicOfStudent.topicOfStudent.Name</td>
+                                <td>@topicOfStudent.topicOfStudent.NameSt</td>
+                                <td>@topicOfStudent.subject.NameCu</td>
+                                <td>@topicOfStudent.pointTable.NameP</td>
+                                <td>@topicOfStudent.topicOfStudent.LectureIntruc</td>
+                                <td>@topicOfStudent.topicOfStudent.DateSt.ToString("dd/MM/yyyy")</td>
+                                <td>@topicOfStudent.topicOfStudent.Times tháng</td>
+                                <td>@dateEnd1</td>
+                                <td>@topicOfStudent.topicOfStudent.Expense VNĐ</td>
+                                <td>@progress</td>
+                                <td class="pointBodyStu">@point1</td>
+                                <td style="display:none">
+                                    <input class="IdSV1" value="@topicOfStudent.topicOfStudent.IdSV" type="hidden" />
+                                    <input class="IdFacu1Stu" value="@topicOfStudent.subject.IdSu" type="hidden" />
+                                    <input class="IdTyStu" type="hidden" value="@topicOfStudent.pointTable.IdP" />
+                                    <input class="Year1Stu" value="@topicOfStudent.topicOfStudent.DateSt.ToString("yyyy/MM/dd")" type="hidden" />
+                                    <input class="ProgressStu" value="@topicOfStudent.progressSt.Progress" type="hidden" />
+
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function listLecture() {
+            $.get("/Statistic/getLectureList", { IdFa: $("#IdF").val() }, function (data) {
+                $("#IdLe").empty(); $("#IdLe").select();
+                if (data != null) {
+                    $.each(data, function (index, row) {
+                        $("#IdLe").append("<option id='IdLei'  value='" + row.IdLe + "'>" + row.NameLe + "</option>");
+
+                        $('#IdLe').find('option[value="' + row.IdLe + '"]').attr("selected", "selected");
+                         
+                    });
+                }
+                $('#IdLe').trigger("chosen:updated");
+
+            });
+        }
+        function listStudent() {
+            $.get("/Statistic/getStudentList", { IdSu: $("#IdFStu").val() }, function (data) {
+                $("#IdSV").empty(); $("#IdSV").select();
+                if (data != null) {
+                    $.each(data, function (index, row) {
+                        $("#IdSV").append("<option id='IdSti'  value='" + row.IdSV + "'>" + row.NameSt + "</option>");
+
+                        $('#IdSV').find('option[value="' + row.IdSV + '"]').attr("selected", "selected");
+
+                    });
+                }
+                $('#IdSV').trigger("chosen:updated");
+
+            });
+        }
+        $(function () {
+            $("#IdLe").chosen({
+                width: "300px"
+            });
+            $("#IdSV").chosen({
+                width: "300px"
+            });
+        });
+        list1 = [];
+        $(".SearchStu").each(function () {
+            var objCells = this.cells;
+            var itemList = {};
+            itemList['NameTopic'] = objCells.item(0).innerHTML;
+            itemList['NameStu'] = objCells.item(1).innerHTML;
+            itemList['Faculty'] = objCells.item(2).innerHTML;
+            itemList['Type'] = objCells.item(3).innerHTML;
+            itemList['Lec'] = objCells.item(4).innerHTML;
+            itemList['DateSt'] = objCells.item(5).innerHTML;
+            itemList['Time'] = objCells.item(6).innerHTML;
+            itemList['DateEnd'] = objCells.item(7).innerHTML;
+            itemList['Expense'] = objCells.item(8).innerHTML;
+            itemList['Status'] = objCells.item(9).innerHTML;
+            itemList['Point'] = objCells.item(10).innerHTML;
+
+            list1.push(itemList);
+        })
+        $.ajax({
+            type: "POST",
+            url: "/Statistic/ExportExcel2/",
+            data: { list1 },
+
+            dataType: "json",
+            success: function (data) {
+
+            }
+
+        });
+        list = [];
+        $(".Search").each(function () {
+            var objCells = this.cells;
+            var itemList = {};
+            itemList['NameTopic'] = objCells.item(0).innerHTML;
+            itemList['NameLec'] = objCells.item(1).innerText;
+             itemList['Type'] = objCells.item(2).innerHTML;
+            itemList['DateSt'] = objCells.item(3).innerHTML;
+             itemList['DateEnd'] = objCells.item(4).innerHTML;
+            itemList['Expense'] = objCells.item(5).innerHTML;
+            itemList['Status'] = objCells.item(6).innerHTML;
+            itemList['Point'] = objCells.item(7).innerHTML;
+
+            list.push(itemList);
+            
+        })
+        $.ajax({
+            type: "POST",
+            url: "/Statistic/ExportExcel1/",
+            data: { list },
+
+            dataType: "json",
+            success: function (data) {
+
+            }
+
+        });
+        
+    </script>

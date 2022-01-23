@@ -1,0 +1,99 @@
+﻿@model DuAnQLNCKH.Models.Account
+
+@{ ViewBag.Title = "FormInsert";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Thêm Tài Khoản</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                @using (Html.BeginForm("Create", "Admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal" style="color:black">
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label for="username" class="text-info">Đối tượng</label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("Position", ViewBag.listPosition as SelectList, "--Lựa chọn loại đối tượng--", new { @required = "Required", @Class = "form-control" })
+ 
+                            </div>
+                        </div>
+                         
+                        <div class="form-group">
+                            <label for="username" class="text-info">Khoa</label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("IdFa", ViewBag.listFaculty as SelectList, "--Lựa chọn khoa--", new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="text-info">Mã tác giả</label>
+                            <div class="col-md-10">
+                                 @Html.TextBox("IdLe", null, new { @class = "form-control", @required = "Nhập mã tác giả", @placeholder = "Nhập mã tác giả" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="text-info">Email</label>
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @required = "Enter Username",@type="email", @placeholder = "Nhập email" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="text-info">Mật Khẩu</label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control", @required = "Nhập mật khẩu", @placeholder = "Nhập mật khẩu" } })
+                                @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username" class="text-info">Quyền Truy Cập</label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.Access, null, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Access, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Thêm Mới" class="btn btn-facebook" />
+                            </div>
+                        </div>
+                    </div>}
+                <hr />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("<< Quay Lại Danh Sách", "Index")
+</div>
+<script>
+    $(document).ready(function () {
+        $("#Level").change(function () {
+            $.get("/Admin/getListGrade", { IdLv: $("#Level").val() }, function (data) {
+                $("#IdGr").empty();
+                $.each(data, function (index, row) {
+
+                    $("#IdGr").append("<option id='IdGr1' data-value=" + row.IdGr + " value='" + row.IdGr + "'>" + row.NameGr + "</option>")
+
+                });
+
+            });
+        });
+    });
+     
+</script>

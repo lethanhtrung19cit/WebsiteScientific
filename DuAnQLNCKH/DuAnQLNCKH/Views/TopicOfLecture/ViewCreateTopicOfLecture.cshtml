@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var DetailTypes = (List<DuAnQLNCKH.Models.PointTable>)ViewBag.listDetailTypes;
+}
+@model DuAnQLNCKH.Models.TopicOfLecture
+@using DuAnQLNCKH.Models;
+@if (new TopicOfLectureModel().checkemail(Session["UserName"].ToString()) == false)
+{
+    <div style="margin:50px 0 0 50px">
+        <h3>Vui lòng cập nhật thông tin để đăng ký đề tài</h3>
+        <a href="@Url.Action("Index", "UserLecture")">Cập nhật thông tin</a>
+    </div>
+}
+else
+{
+    using (Html.BeginForm("CreateTopicOfLecture", "TopicOfLecture", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div style="color:green">
+                @ViewBag.Message
+            </div>
+
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Tên công trình</div>
+                <div>
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên đề tài" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+             
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Loại đề tài</div>
+                @if (ViewBag.listtype != null)
+                {
+
+                    @Html.DropDownListFor(model=>model.IdP, ViewBag.listtype as SelectList, "--Lựa chọn phân loại--", new { @class = "form-control" })
+
+                }
+            </div>
+              
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                            Ngày bắt đầu
+                        </div>
+                        <div>
+
+                            @Html.EditorFor(model => model.DateSt, new { htmlAttributes = new { @Value = "2021-06-23", @class = "form-control", @type = "date", } })
+                            @Html.ValidationMessageFor(model => model.DateSt, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-left:100px">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                            Thời gian thực hiện
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.Times, new { htmlAttributes = new { @class = "form-control", @required = "Required", @Style="width:90px" } })
+                                @Html.ValidationMessageFor(model => model.Times, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-1" style="margin-left:50px">
+                                tháng
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-left:100px">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">Kinh phí</div>
+
+                        <div>
+                            @Html.EditorFor(model => model.Expense, new { htmlAttributes = new { @class = "form-control", @required = "Required", @placeholder = "Nhập kinh phí", @type="number" } })
+                            @Html.ValidationMessageFor(model => model.Expense, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             
+            <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                Chủ nhiệm công trình : @ViewBag.NameLe
+            </div>
+                 
+             <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                Các thành viên : <input onclick="addMember()" class="btn btn-group" style="background: #0094ff; font-weight: bold; width:70px; color: white" value="Thêm"/>
+
+            </div>
+             
+             
+            <div id="add">
+                 
+                
+            </div> 
+             
+            
+             
+            <div class="row">
+                
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                            Số lượng tác giả
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label id="NumberAuthor">1</label>
+                                @Html.HiddenFor(model => model.CountAuthor, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div style="color:black; font-weight:bold; font-family:'Times New Roman'; font-size:20px">
+                    Upload file thuyết minh đề tài
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="file" name="FileDemo1" id="FileDemo1" />
+                        @Html.ValidationMessageFor(model => model.FileDemo, "", new { @class = "text-danger", @required = "Required" })
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <input name="typeRegister" id="typeRegister" type="hidden"/>
+                <label style="border: 1px solid #ccc; padding: 10px; margin: 0 0 10px;">
+                    <input style="width: 20px; height: 20px;" value="1" type="checkbox" name="check" onclick="onlyOne(this, 1)">
+                    Đăng ký xét duyệt
+                </label>
+                <label style="border: 1px solid #ccc; padding: 10px; margin: 0 0 10px;">
+                    <input style="width: 20px; height: 20px;" value="2" type="checkbox" name="check" onclick="onlyOne(this, 2)">
+                    Đăng ký nghiệm thu
+                </label>
+                <script>
+                    function onlyOne(checkbox, id) {
+                        var checkboxes = document.getElementsByName('check');
+                         
+                        $('#typeRegister').val(id);
+
+                        checkboxes.forEach((item) => {
+                            if (item !== checkbox) item.checked = false
+                        })
+                    }
+
+                </script>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input style="background:blue; font-weight:bold; color:white" type="submit" id="create" value="Đăng ký" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <script>
+         
+        function addMember() {
+            $('#NumberAuthor').text(Number.parseInt($('#NumberAuthor').text()) + 1);
+            $('#CountAuthor').val($('#NumberAuthor').text());
+            $('#add').append("Email : <input name=email class='form-control' style='display:inline-block; width:300px' type='textbox'/>")
+            $('#add').append("Họ tên : <input name=nameAu class='form-control' style='display:inline-block;width:300px; margin-top:20px;' type='textbox'/> <br>")
+        }
+        $(document).ready(function () {
+            $("#IdTy").change(function () {
+                $.get("/TopicOfLecture/getTypeList", { IdTy: $("#IdTy").val() }, function (data) {
+                    $("#IdP").empty();
+                    $.each(data, function (index, row) {
+
+                        $("#IdP").append("<option id='IdPi' data-value=" + row.IdP + " value='" + row.IdP + "'>" + row.NameP + "</option>")
+
+                    });
+
+                });
+            });
+        });
+         
+        function detailType1(idty) {
+
+            //var name = idty.options[idty.selectedIndex].text;
+            //alert(name);
+
+            var idTy = $(idty.options[idty.selectedIndex]).data().value;
+            alert(idTy);
+            $.ajax({
+
+                type: "POST",
+                url: "/TopicOfLecture/ViewCreateTopicOfLecture/",
+                data: { IdTy: idTy },
+                dataType: "json",
+                success: function () {
+
+                }
+
+            });
+        }
+    </script>
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,107 @@
+﻿<!-- Main Content -->
+ 
+    <!-- Sidebar -->
+    <ul style="width: 250px; border-right:solid 2px blue" class="navbar-nav bg-gradient-primary sidebar" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <!-- Divider -->
+        <!-- Nav Item - Dashboard -->
+        <!-- Divider -->
+        <!-- Heading -->
+        @*<div class="sidebar-heading">
+            <i style="font-size:15x" class="far fa-user-circle"></i>
+            <span style="font-size:15px; color:white">Tài Khoản</span>
+        </div>*@
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <img src="~/images/setting-icon-500x500.png" width="35px" height="35px" />
+                <span style="color:white">
+                    <b>Tài khoản</b>
+                </span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+
+                    <a class="collapse-item" href="@Url.Action("Index", "UserManagement")">Thay Đổi Thông tin</a>
+                    <a class="collapse-item" href="@Url.Action("Index", "Login", new { id=Session["Acess"].ToString()})"> Đăng xuất </a>
+                </div>
+            </div>
+        </li>
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+
+        <li class="nav-item active">
+            @*<a class="nav-link" href="" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+            aria-controls="collapsePages">*@
+            <a class="nav-link" data-toggle="collapse" data-target="#collapsePages"
+               aria-expanded="true" aria-controls="collapsePages">
+                 
+                <img src="~/images/open-file-folder-emoji.png" width="30px" height="30px" />
+                <span style="color: white;">Quản lý công trình</span>
+            </a>
+            <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    @*<h6 class="collapse-header">Login Screens:</h6>*@
+
+
+
+                    <a href="@Url.Action("chuaduyet", "TopicOfLecture")" class="collapse-item">
+
+                        Xét duyệt công trình
+                    </a>
+                    <a href="@Url.Action("Index", "TopicOfLecture")" class="collapse-item">
+
+                        Công trình đang thực hiện
+                    </a>
+                    <a href="@Url.Action("listextension", "TopicOfLecture")" class="collapse-item">
+
+                        Gia hạn công trình
+                    </a>
+                    <a href="@Url.Action("UpdateAcceptance", "UpdateActivity")" class="collapse-item">
+
+                        Nghiệm thu công trình
+                    </a>
+                    <a href="@Url.Action("listAcceptanced", "TopicOfLecture")" class="collapse-item">
+
+                        Công trình đã nghiệm thu
+                    </a>
+                </div>
+            </div>
+        </li>
+       
+    
+
+        <!-- Nav Item - Charts -->
+        <!-- Nav Item - Tables -->
+
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Index", "Statistic")">
+                <img src="~/images/time-statistics-1605698-1361047.png" width="30px" height="30px" />               
+                <span style="color: white">Thống kê danh mục công trình</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Student","UpdateActivity") ">
+                <img src="~/images/updateActi1.png" width="35px" height="35px" />
+                <span>Cập Nhật Hoạt Động Nghiên Cứu Sinh Viên</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Index", "UpdatePoint")">
+                <i style="color: blue" class="fas fa-fw fa-table"></i>
+                <span style="color: white">Cập Nhật Tính Điểm KHCN</span>
+            </a>
+
+ 
+            <hr class="sidebar-divider d-none d-md-block">
+
+           
+
+    </ul>
+  

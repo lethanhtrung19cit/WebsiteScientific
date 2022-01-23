@@ -1,0 +1,80 @@
+﻿@model DuAnQLNCKH.Models.Statement
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listStatement = (List<DuAnQLNCKH.Models.Statement>)ViewBag.listStatement;
+}
+
+<table class="table1" id="table1">
+    <tr class="headerrow">
+        <th>
+            Mã báo cáo
+        </th>
+        <th>
+            Ngày báo cáo
+        </th>
+        <th>
+            Nội dung báo cáo
+        </th>
+
+    </tr>
+    @foreach (var report in listStatement)
+    {
+
+        <tr>
+            <td>
+                <span>
+                    @report.IdSt
+                </span>
+            </td>
+            <td>
+                <span>
+                    @report.DateRp.ToString("dd/MM/yyyy")
+                </span>
+            </td>
+            <td>
+                <span>
+                    @report.Status
+
+                </span>
+            </td>
+
+        </tr>
+    }
+
+</table>
+<div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Thêm lịch báo cáo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm("AddStatement", "Report", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.DateRp)
+
+                        @DateTime.Now.ToString("dd/MM/yyyy")
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Status)
+
+
+                        @Html.TextBoxFor(Model=>Model.Status, null, new { @class = "form-control" })
+                    </div>
+
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<button id='addtype' class="btn btn-primary" data-toggle="modal" data-target="#showmodal">Thêm mới lịch báo cáo</button>

@@ -1,0 +1,211 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var topicPending = (List<DuAnQLNCKH.Models.TopicOfStudentView>)ViewBag.topicPending;
+    var topicProgress = (List<DuAnQLNCKH.Models.TopicOfStudentView>)ViewBag.topicProgress;
+    var topicEnd = (List<DuAnQLNCKH.Models.TopicOfStudentView>)ViewBag.topicEnd;
+}
+
+@using DuAnQLNCKH.Models
+<div class="page-header" style="margin-top:20px">
+    <strong style="color:blue; font-size:26px; font-weight:bold">Danh sách đề tài sinh viên</strong>
+</div>
+<hr />
+<div style="font-size:24px; font-weight:bold; margin-bottom:20px">Đề tài chờ duyệt</div>
+@if (topicPending.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+    <table class="table1" style="width:1070px">
+
+        <tr class="headerrow">
+
+            <th>
+                Mã đề tài
+            </th>
+            <th>Tên đề tài</th>
+            <th>GV hướng dẫn</th>
+            <th> Mã sinh viên </th>
+            <th> Họ tên </th>
+            <th>Chuyên sâu</th>
+            <th>Email</th>
+            <th>
+                Phân loại
+
+            </th>
+            <th>  Ngày bắt đầu      </th>
+             
+            <th>
+                Ngày kết thúc
+            </th>
+            <th>
+                Chi phí
+            </th>
+             
+        </tr>
+
+        @foreach (var item in topicPending)
+        {
+            var dateEnd = item.topicOfStudent.DateSt.AddMonths(item.topicOfStudent.Times).ToString("d");
+
+            <tr>
+                <td>@item.topicOfStudent.IdTp</td>
+                <td style="width:120px">@item.topicOfStudent.Name</td>
+                <td>@item.topicOfStudent.LectureIntruc</td>
+
+                <td> @item.topicOfStudent.IdSV </td>
+                <td> @item.topicOfStudent.NameSt </td>
+                <td> @item.subject.NameCu </td>
+                <td> @item.topicOfStudent.Email </td>
+                <td>@item.pointTable.NameP</td>
+                <td>@item.topicOfStudent.DateSt.ToString("dd/MM/yyyy")</td>
+                 <td>@dateEnd</td>
+                <td>@item.topicOfStudent.Expense</td>
+                 
+             </tr>
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}
+<div style="font-size:24px; font-weight:bold; margin-bottom:20px">Đề tài đang thực hiện</div>
+
+@if (topicProgress.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+    <table class="table1" style="width:1070px">
+
+        <tr class="headerrow">
+
+            <th>
+                Mã đề tài
+            </th>
+            <th>Tên đề tài</th>
+            <th>GV hướng dẫn</th>
+            <th> Mã sinh viên </th>
+            <th> Họ tên </th>
+            <th>Chuyên sâu</th>
+            <th>Email</th>
+            <th>
+                Phân loại
+
+            </th>
+            <th>  Ngày bắt đầu      </th>
+             
+            <th>  Ngày kết thúc </th>
+            <th>
+                Chi phí
+            </th>
+            <th>
+                Trạng thái
+            </th>
+
+
+        </tr>
+
+        @foreach (var item in topicProgress)
+        {
+            var dateEnd = item.topicOfStudent.DateSt.AddMonths(item.topicOfStudent.Times).ToString("d");
+
+            var dateLec = new TopicOfLectureModel().dateStu(item.topicOfStudent.IdTp);
+            if (dateLec == item.progressSt.Date)
+            {
+                var progress = "";
+                if (item.progressSt.Progress == 1)
+                {
+                    progress = "đang thực hiện";
+                }
+                else if (item.progressSt.Progress == 2)
+                {
+                    progress = "quá hạn";
+                }
+                else
+                {
+                    progress = "đã nghiệm thu";
+                }
+                <tr>
+                    <td>@item.topicOfStudent.IdTp</td>
+                    <td style="width:120px">@item.topicOfStudent.Name</td>
+                     <td>@item.topicOfStudent.LectureIntruc</td>
+
+                    <td> @item.topicOfStudent.IdSV </td>
+                    <td> @item.topicOfStudent.NameSt </td>
+                    <td> @item.subject.NameCu </td>
+                    <td> @item.topicOfStudent.Email </td>
+                    <td>@item.pointTable.NameP</td>
+                    <td>@item.topicOfStudent.DateSt.ToString("dd/MM/yyyy")</td>
+                     <td>@dateEnd</td>
+                    <td>@item.topicOfStudent.Expense</td>
+                    <td>@progress</td>
+                 </tr>
+            }
+        }
+    </table>
+    <div>
+        --------------------------------------------------------------------------
+    </div>
+}
+<div style="font-size:24px; font-weight:bold; margin-bottom:20px">Đề tài đã nghiệm thu</div>
+
+@if (topicEnd.Count < 1)
+{
+    <div>Không có đề tài nào</div>
+}
+else
+{
+    <table class="table1" style="width:1070px">
+
+        <tr class="headerrow">
+
+            <th>
+                Mã đề tài
+            </th>
+            <th>Tên đề tài</th>
+            <th>GV hướng dẫn</th>
+            <th> Mã sinh viên </th>
+            <th> Họ tên </th>
+            <th>Chuyên sâu</th>
+            <th>Email</th>
+            <th>
+               Phân loại
+
+            </th>
+            <th>  Ngày bắt đầu </th>
+             
+            <th>  Ngày kết thúc </th>
+            <th>
+                Chi phí
+            </th>
+             
+        </tr>
+
+        @foreach (var item in topicProgress)
+        {
+            var dateEnd = item.topicOfStudent.DateSt.AddMonths(item.topicOfStudent.Times).ToString("d");
+
+            <tr>
+                <td>@item.topicOfStudent.IdTp</td>
+                <td style="width:120px">@item.topicOfStudent.Name</td>
+                <td>@item.topicOfStudent.LectureIntruc</td>
+
+                <td> @item.topicOfStudent.IdSV </td>
+                <td> @item.topicOfStudent.NameSt </td> 
+                <td> @item.subject.NameCu </td>
+                <td> @item.topicOfStudent.Email </td>
+                <td>@item.pointTable.NameP</td>
+                <td>@item.topicOfStudent.DateSt.ToString("dd/MM/yyyy")</td>
+                 <td>@dateEnd</td>
+                <td>@item.topicOfStudent.Expense</td>
+                 
+             </tr>
+        }
+    </table>
+
+}

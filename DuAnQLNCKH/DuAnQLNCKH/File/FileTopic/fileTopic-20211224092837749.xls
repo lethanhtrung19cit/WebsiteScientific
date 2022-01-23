@@ -1,0 +1,13 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">Tên đề tài</th><th scope="col">Tên sinh viên</th><th scope="col">Chuyên sâu</th><th scope="col">Loại đề tài</th><th scope="col">GV hướng dẫn</th><th scope="col">Ngày bắt đầu</th><th scope="col">Thời gian</th><th scope="col">Kết thúc</th><th scope="col">Kinh phí</th><th scope="col">Trạng thái</th><th scope="col">Điểm</th>
+		</tr><tr>
+			<td>Nghi&#234;n cứu lựa chọn b&#224;i tập ph&#225;t triển sức mạnh tốc độ cự ly 50m cho nam sinh vi&#234;n kh&#243;a DH13 GDTC</td><td>L&#234; Văn A</td><td>Bơi lội</td><td>Tạp ch&#237;</td><td>TS. Nguyễn Nho Dũng</td><td>23/11/2020</td><td>12 th&#225;ng</td><td>23/11/2021</td><td>1000000 VNĐ</td><td>đang thực hiện</td><td>9</td>
+		</tr><tr>
+			<td>Biện ph&#225;p n&#226;ng cao hứng th&#250; học tập c&#225;c m&#244;n l&#253; thuyết  cho sinh vi&#234;n ĐH TDTT ĐN</td><td>Tống Văn Thuận</td><td>Bơi lội</td><td>Tạp ch&#237;</td><td>TS.Nguyễn Nho Dũng</td><td>20/11/2021</td><td>12 th&#225;ng</td><td>20/11/2022</td><td>1000000 VNĐ</td><td>đang thực hiện</td><td>9</td>
+		</tr><tr>
+			<td>Nghi&#234;n cứu phương ph&#225;p điều chỉnh trạng th&#225;i t&#226;m l&#253; trước thi đấu cho nam VĐV đua thuyền lứa tuổi 16-17 CLB Đua thuyền Đ&#224; Nẵng</td><td>Trịnh B&#237;ch Phượng</td><td>Bơi lội</td><td>Tạp ch&#237;</td><td>TS. L&#234; Huy H&#224;</td><td>20/11/2020</td><td>12 th&#225;ng</td><td>20/11/2021</td><td>1000000 VNĐ</td><td>đang thực hiện</td><td>4.5</td>
+		</tr>
+	</table>
+</div>

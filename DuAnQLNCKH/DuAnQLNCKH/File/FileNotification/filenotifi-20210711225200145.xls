@@ -1,0 +1,9 @@
+<div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;">
+		<tr>
+			<th scope="col">Tên đề tài</th><th scope="col">Tên sinh viên</th><th scope="col">Tên khoa</th><th scope="col">Loại đề tài</th><th scope="col">Ngày bắt đầu</th><th scope="col">Thời gian</th><th scope="col">Kết thúc</th><th scope="col">Kinh phí</th><th scope="col">Trạng thái</th><th scope="col">Điểm</th>
+		</tr><tr>
+			<td>Nghi&#234;n cứu tạp ch&#237; sức khỏe</td><td>Nguyễn Minh Hiếu</td><td>Gi&#225;o dục thể chất</td><td>Tạp ch&#237;</td><td>23/06/2021</td><td>4 tháng</td><td>23/10/2021 00:00:00</td><td>2000000 VND</td><td>đang thực hiện</td><td>9</td>
+		</tr>
+	</table>
+</div>

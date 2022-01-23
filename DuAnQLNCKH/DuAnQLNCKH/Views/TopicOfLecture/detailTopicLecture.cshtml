@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "detailTopicLecture";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var detail = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listDetail;
+}
+ @using DuAnQLNCKH.Models 
+<style>
+    h4 {
+        display: inline-block;
+    }
+</style>
+<h2>
+    Chi tiết đề tài
+</h2>
+<hr />
+@foreach (var t in detail)
+{
+    var dateEnd = t.topicOfLecture.DateSt.AddMonths(t.topicOfLecture.Times).ToString("d");
+    <div style="font-size:20px">
+        <div>
+            <h4>Tên đề tài</h4> :<b> @t.topicOfLecture.Name </b>
+        </div>
+        <div style="margin-top:20px">
+            <h4>Nhóm tác giả</h4> : 
+             
+            @foreach (var item in new TopicOfLectureModel().listAuthors(t.topicOfLecture.IdTp))
+            {
+                if (item.Grade == 0)
+                {
+                    <b>@item.NameAu *</b>  
+                }
+                else
+                {
+                    <b>, @item.NameAu</b>
+                }
+            }
+        
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Khoa</h4> :<b> @t.faculty.Name</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Email</h4> :<b> @t.information.Email</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>Loại đề tài</h4> : <b>@t.pointTable.NameP</b>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Ngày bắt đầu</h4> :<b> @t.topicOfLecture.DateSt.ToString("d")</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Thời gian thực hiện</h4> :<b> @t.topicOfLecture.Times tháng</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>Ngày hoàn thành</h4> :<b> @dateEnd</b>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6">
+                <h4>Kinh phí</h4> : <b> @t.topicOfLecture.Expense VND</b>
+            </div>
+            <div class="col-md-6">
+                <h4>Số lượng tác giả</h4> :<b> @t.topicOfLecture.CountAuthor</b>
+            </div>
+        </div>
+
+        <div style="margin-top:20px">
+            <h4>File thuyết trình đề tài</h4> : <a href="@Url.Action("DownloadFile", "Notification", new { filePath = t.topicOfLecture.FileDemo })">@t.topicOfLecture.FileDemo</a>
+
+        </div>
+        <div style="margin-top:20px">
+            <button data-toggle="popover" title="" data-placement="left" data-content="Đã gửi email đến giảng viên" style="width:100px; margin-left:200px" type="button" class="btn btn-success" onclick="XdBtnClicked('@t.topicOfLecture.IdTp', '@t.topicOfLecture.DateSt.ToString("dd/MM/yyyy")', '@t.topicOfLecture.Name', '@t.information.Email')"> <span class="icon text-white-50"><i class="fas fa-check"> </i></span>  <span><b>Duyệt</b></span>    </button>
+
+            <button style="width:160px; margin-left:200px" type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectTopic"> <span class="icon text-white-50"><i class="fas fa-times"> </i></span>  <span><b>Không duyệt</b></span>    </button>
+
+        </div>
+        <div id="approved" style="display:none; margin-left:150px">
+            <h4 style="color:aquamarine">  Đã duyệt đề tài</h4>
+        </div>
+    </div>
+
+    <div id="rejectTopic" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="max-width:700px">
+            <div class="modal-content">
+
+                <div id="myModal">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Lí do không duyệt</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Lí do</label>
+                            </div>
+                            <div class="col-md-7">
+
+                                <textarea id="Reason" style="max-width:500px; height:130px; padding-left:10px" class="form-control" required></textarea>
+                                <div id="rejected" style="display:none">
+                                    <h4 style="color:aquamarine">  Đã gửi email thông báo</h4>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <input data-toggle="popover" title="" data-placement="left" data-content="Đã gửi email đến giảng viên" onclick="rejectTopic('@t.topicOfLecture.IdTp')" type="button" class="btn btn-primary" value="Gửi" />
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+}
+
+<script>
+    
+    function XdBtnClicked(IdTp, Times, Name, Email) {
+
+        $('#approved').show();
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/xetduyet2/",
+            data: { IdTp: IdTp, Times: Times, NameTo: Name, Email: Email },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+    function rejectTopic(IdTp) {
+        $('#rejected').show();
+        var Reason = $('#Reason').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/TopicOfLecture/rejectTopic/",
+            data: { IdTp: IdTp, Reason: Reason},
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+
+
+
+</script>

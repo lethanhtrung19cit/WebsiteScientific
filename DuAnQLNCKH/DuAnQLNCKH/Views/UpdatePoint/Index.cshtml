@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listPoint = (List<DuAnQLNCKH.Models.TopicOfLectureView>)ViewBag.listPoint;
+    int stt = 1;
+    string id = "a";
+    string id2 = "b";
+}
+@model DuAnQLNCKH.Models.PointTable
+
+<div class="page-header" style="margin-top:20px">
+    <strong style="color:blue; font-size:26px; font-weight:bold">Phân loại</strong>
+</div>
+<hr />
+ 
+<button style="margin: 20px 0 20px 0; background: #2cc6dc" id='addpoint' class="btn btn-primary" data-toggle="modal" data-target="#showmodalpoint"> <i class="fa fa-plus">Thêm mới</i></button>
+
+<table class="table1">
+    <tr class="headerrow">
+        <th>
+            STT
+        </th>
+        <th>
+            Mã loại
+        </th>
+        <th>
+            Tên thể loại
+        </th>
+         
+        <th>
+            Giờ chuẩn
+        </th>
+         
+        <th>
+            Điểm 
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in listPoint)
+    {
+        <tr>
+            <td>
+                @stt.ToString()
+                @{
+                    stt++;
+                }
+            </td>
+            <td style="width:140px">
+                @item.pointTable.IdP
+            </td>
+             
+            <td style="width:400px">
+                @item.pointTable.NameP
+            </td>
+              
+            <td style="width:100px">
+                
+                @item.pointTable.MaxTime
+            </td>
+            <td id="@stt">
+                @item.pointTable.Value
+            </td>
+            <td>
+                @{
+                    id = id + stt.ToString();
+                }
+                <div id="@id" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document" style="max-width:700px">
+                        <div class="modal-content">
+                            <div id="myModal">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title">Cập nhật</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                @{string id3 = id2 + stt.ToString(); }
+                                @using (Html.BeginForm("Update", "UpdatePoint"))
+                                {
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            @Html.HiddenFor(model=>model.IdP, new {Value=item.pointTable.IdP })
+                                            
+                                        </div>
+                                        <div class="form-group hitec-border-bottom-dotted">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Mã phân loại</label>
+                                                </div>
+                                                <div class="col-md-7" style="text-align:left">
+                                                    <p style="font-size:18px; float:left" class="form-control-static"> @item.pointTable.IdP</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group hitec-border-bottom-dotted" style="height:110px">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Tên loại</label>
+                                                </div>
+                                                <div class="col-md-7" style="text-align:left">
+                                                    @Html.TextBoxFor(model => model.NameP, new { @class = "form-control", @Value = item.pointTable.NameP, @required = "Required" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group hitec-border-bottom-dotted" style="height:110px">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Điểm</label>
+                                                </div>
+                                                <div class="col-md-7" style="text-align:left">
+                                                    @Html.TextBoxFor(model => model.Value, new { @class = "form-control", @Value = item.pointTable.Value, @required = "Required", @type="number", @step="0.1" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group hitec-border-bottom-dotted" style="height:110px">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="font-weight: bold; float: right; font-size: 19px; font-family: 'Times New Roman'; color: black" class="control-label">Giờ chuẩn</label>
+                                                </div>
+                                                <div class="col-md-7" style="text-align:left">
+                                                    @Html.TextBoxFor(model => model.MaxTime, new { @class = "form-control", @Value=item.pointTable.MaxTime, @required = "Required", @type = "number" })
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                         
+                                         
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary" value="Lưu" />
+                                    </div>
+                                }
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <button id="showModal @item.pointTable.IdP" style="margin: 20px 0 20px 0; background: #f7c442 " class="btn btn-primary" data-toggle="modal" data-target="#@id"><i class="fa fa-pen-alt">Cập nhật</i>  </button>
+
+            </td>
+
+        </tr>
+    }
+
+</table>
+<div id="showmodalpoint" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="max-width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Thêm mới phân loại</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @using (Html.BeginForm("CreatePoint", "UpdatePoint", FormMethod.Post, new { @class = "form - horizontal", enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                     
+                     
+                    <div class="form-group">
+                        Tên loại
+                        @Html.TextBox("NameP", null, new { @class = "form-control", @required = "Required" })
+                    </div>
+                    <div class="form-group">
+                        Giờ chuẩn  :
+
+                        @Html.TextBox("MaxTime", null, new { @class = "form-control", @type="number"   })
+
+                    </div>
+                     
+                    <div class="form-group">
+                        Số điểm  :
+
+                        @Html.TextBox("Value", null, new { @class = "form-control",@type="number" })
+
+                    </div>
+                      
+                </div>
+                <div class="modal-footer">
+                     <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+     
+    function deleteType(IdTy) {
+
+
+        var row = $('#' + IdTy);
+
+        row.remove();
+
+        $.ajax({
+            type: "POST",
+            url: "/UpdatePoint/DeleteType/",
+            data: { IdTy: IdTy },
+
+            dataType: "json",
+            success: function () {
+
+            }
+
+        });
+
+    };
+    function updateTopic(IdTp, stt, id) {
+        //alert('#Status+' + IdTp);
+
+        var Status = $("input#" + id).val();
+
+
+        $("#input" + id).attr('data-val-required', 'true');
+
+
+        $('#' + stt).text(Status);
+        //alert("Cập nhật thành công");
+        $.ajax({
+            type: "POST",
+            url: "/UpdatePoint/Update/",
+            data: { IdP: IdTp, Value: Status },
+
+            dataType: "json",
+            success: function (data) {
+
+            }
+
+        });
+    }
+</script>
